@@ -1,0 +1,87 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    background-color: steelblue;
+}
+
+.multiplication-table {
+    margin-top: 100px;
+}
+
+.container {
+    max-width: 1220px;
+    padding: 0 10px;
+    margin: 0 auto;
+}
+.title {
+    text-align: center;
+    padding-top: 50px;
+    color: #fff;
+
+    font-size: 42px;
+}
+.show_table-btn {
+    padding: 10px 25px;
+    background-color: tomato;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 22px;
+    color: #fff;
+    display: block;
+    margin: 100px auto;
+}
+.test__btns {
+    display: flex;
+    justify-content: space-around;
+}
+.easy__test-btn,
+.hard__test-btn {
+    padding: 10px 25px;
+    background-color: tomato;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 22px;
+    color: #fff;
+}
+
+.easy__test-btn:hover,
+.hard__test-btn:hover,
+.show_table-btn:hover {
+    background-color: rgb(172, 60, 40);
+}
+
+.test {
+    border: solid 3px #fff;
+    padding: 10px;
+}
+.test__question {
+    text-align: center;
+    padding-top: 30px;
+    color: #fff;
+    font-size: 32px;
+}
+.answer__options {
+    margin-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+}
+.option {
+    width: 50%;
+    cursor: pointer;
+    padding: 30px 0;
+    margin-bottom: 30px;
+    border: none;
+    background-color: tomato;
+    border-radius: 50px;
+    font-size: 26px;
+}
+
+.hide {
+    display: none;
+}
