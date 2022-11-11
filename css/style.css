@@ -100,6 +100,8 @@
     font-size: 24px;
     border: none;
     border-radius: 5px;
+    color: #000;
+    font-weight: bold;
 }
 .answer:hover {
     background-color: rgb(172, 60, 40);
