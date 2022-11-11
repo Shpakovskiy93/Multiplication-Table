@@ -1,62 +1,81 @@
+let counterRightAnswer = 0;
+drawMainPage()
 
-const easyTestBtn = document.querySelector('.easy__test-btn');
+function drawMainPage() {
+    const title = document.createElement('h1');
+    title.classList.add('title');
+    title.innerText = 'WELCOME';
 
+    const showMultiplicationTableBtn = document.createElement('button');
+    showMultiplicationTableBtn.classList.add('show__multiplicationTable-btn');
+    showMultiplicationTableBtn.innerText = 'show multiplication table';
 
-easyTestBtn.addEventListener('click', e => {
-    createEasyCardQuestion(getRandomNumer(2,9), getRandomNumer(2,9));
-})
+    const easyTestBtn = document.createElement('button');
+    easyTestBtn.classList.add('easy__test-btn');
+    easyTestBtn.innerText = 'easy test';
+    easyTestBtn.addEventListener('click', drawEasyTest);
 
+    const hardTestBtn = document.createElement('button');
+    hardTestBtn.classList.add('hard__test-btn');
+    hardTestBtn.innerText = 'hard test';
 
+    const wrapperLevelTestBtns = document.createElement('div');
+    wrapperLevelTestBtns.classList.add('level__test-btns');
+    wrapperLevelTestBtns.append(easyTestBtn, hardTestBtn)
 
-function createEasyCardQuestion(num1, num2) {
-    document.querySelector('.multiplication-table').innerHTML = '';
-
-    let answersArr = [num1 * num2, getRandomNumer(5,100), getRandomNumer(5,100), getRandomNumer(5,100)];
-    let answerShuflArr = shuffleArray(answersArr);
-
-    const optionBtn1 = document.createElement('button');
-    optionBtn1.classList.add('option');
-    optionBtn1.innerText = answerShuflArr[0];
-    const optionBtn2 = document.createElement('button');
-    optionBtn2.classList.add('option');
-    optionBtn2.innerText = answerShuflArr[1];
-    const optionBtn3 = document.createElement('button');
-    optionBtn3.classList.add('option');
-    optionBtn3.innerText = answerShuflArr[2];
-    const optionBtn4 = document.createElement('button');
-    optionBtn4.classList.add('option');
-    optionBtn4.innerText = answerShuflArr[3];
-
-    const answerOptions = document.createElement('div');
-    answerOptions.classList.add('answer__options');
-    answerOptions.append(optionBtn1, optionBtn2, optionBtn3, optionBtn4);
-
-    const title = document.createElement('h2');
-    title.classList.add('test__question');
-    title.innerText = `${num1} multiply by ${num2}`;
-
-    const test = document.createElement('div');
-    test.classList.add('test');
-    test.append(title, answerOptions);
-
-    const container = document.createElement('div');
-    container.classList.add('container');
-    container.append(test);
-
-    document.querySelector('.multiplication-table').append(container);
+    const wrapperMainPage = document.createElement('div');
+    wrapperMainPage.classList.add('main__page');
+    wrapperMainPage.append(title, showMultiplicationTableBtn, wrapperLevelTestBtns);
 
 
-    document.querySelectorAll('.option').forEach(btn => {
-        btn.addEventListener('click', e => {
-            if(+e.target.innerText === num1 * num2) {
-                createEasyCardQuestion(getRandomNumer(2,9), getRandomNumer(2,9));
-            } else {
-                e.target.classList.add('hide');
+    document.querySelector('.multiplication__table').append(wrapperMainPage);
+}
+function drawEasyTest() {
+    document.querySelector('.multiplication__table').innerHTML = '';
+
+    let firstNumber = getRandomNumer(2, 9);
+    let secondNumber = getRandomNumer(2, 9);
+    let rightAnswer = firstNumber * secondNumber;
+    let answersArr = shuffleArray([rightAnswer, rightAnswer + 1, rightAnswer - 1, getRandomNumer(10, 100)]);
+
+    const counterNumber = document.createElement('span');
+    counterNumber.classList.add('score__number');
+    counterNumber.innerHTML = counterRightAnswer;
+
+    const counter = document.createElement('p');
+    counter.classList.add('test__score');
+    counter.innerText = 'score : ';
+    counter.append(counterNumber);
+
+    const question = document.createElement('h1');
+    question.classList.add('question');
+    question.innerText = `${firstNumber} multiply by ${secondNumber}`;
+
+    let answerArrBtn = [];
+    for(let i = 0; i < 4; i++) {
+        let answerBtn = document.createElement('button');
+        answerBtn.classList.add('answer');
+        answerBtn.innerText = answersArr[i];
+        answerBtn.addEventListener('click', e => {
+            if(+e.target.innerText === rightAnswer) {
+                counterRightAnswer++
+                drawEasyTest();
             }
         })
-    })
+        answerArrBtn.push(answerBtn);
+    }
+    
+    const wrapperAnswersBtn = document.createElement('div');
+    wrapperAnswersBtn.classList.add('answers');
+    wrapperAnswersBtn.append(...answerArrBtn);
 
+    const wrapperTest = document.createElement('div');
+    wrapperTest.classList.add('test');
+    wrapperTest.append(counter, question, wrapperAnswersBtn);
+
+    document.querySelector('.multiplication__table').append(wrapperTest);
 }
+
 
 
 
@@ -69,12 +88,12 @@ function shuffleArray(array) {
 
     while (currentIndex != 0) {
   
-      randomIndex = Math.floor(Math.random() * currentIndex);
-      currentIndex--;
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
   
-      [array[currentIndex], array[randomIndex]] = [
+        [array[currentIndex], array[randomIndex]] = [
         array[randomIndex], array[currentIndex]];
     }
   
     return array;
-  }
+}

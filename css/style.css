@@ -4,27 +4,24 @@
     padding: 0;
 }
 
-body {
+.multiplication__table {
     background-color: steelblue;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
 }
-
-.multiplication-table {
-    margin-top: 100px;
-}
-
-.container {
-    max-width: 1220px;
-    padding: 0 10px;
-    margin: 0 auto;
+.main__page {
+    padding: 10px 10px;
 }
 .title {
     text-align: center;
-    padding-top: 50px;
     color: #fff;
-
     font-size: 42px;
 }
-.show_table-btn {
+.show__multiplicationTable-btn {
     padding: 10px 25px;
     background-color: tomato;
     border: none;
@@ -34,12 +31,23 @@ body {
     color: #fff;
     display: block;
     margin: 100px auto;
+    text-transform: uppercase;
 }
-.test__btns {
+.level__test-btns {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
 }
-.easy__test-btn,
+.easy__test-btn {
+    padding: 10px 25px;
+    background-color: tomato;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 22px;
+    color: #fff;
+    text-transform: uppercase;
+    margin-right: 10px;
+}
 .hard__test-btn {
     padding: 10px 25px;
     background-color: tomato;
@@ -48,40 +56,51 @@ body {
     cursor: pointer;
     font-size: 22px;
     color: #fff;
+    text-transform: uppercase;
+    margin-left: 10px;
 }
-
 .easy__test-btn:hover,
 .hard__test-btn:hover,
-.show_table-btn:hover {
+.show__multiplicationTable-btn:hover {
     background-color: rgb(172, 60, 40);
 }
 
+
 .test {
-    border: solid 3px #fff;
+    border: none;
+    border-radius: 5px;
+    background-color: #fff;
     padding: 10px;
 }
-.test__question {
+.test__score {
+    text-align: right;
+    font-weight: bold;
+    margin: 20px 0 20px;
+}
+.question {
     text-align: center;
-    padding-top: 30px;
-    color: #fff;
-    font-size: 32px;
+    font-size: 42px;
+    border: 2px solid tomato;
+    border-radius: 5px;
+    padding: 20px 0;
 }
-.answer__options {
-    margin-top: 30px;
+.answers {
+    margin-top: 50px;
     display: flex;
+    align-items: center;
     flex-wrap: wrap;
+    justify-content: space-around;
 }
-.option {
-    width: 50%;
-    cursor: pointer;
-    padding: 30px 0;
-    margin-bottom: 30px;
-    border: none;
+.answer {
+    padding: 20px 45px;
+    width: 45%;
+    margin-top: 20px;
     background-color: tomato;
-    border-radius: 50px;
-    font-size: 26px;
+    cursor: pointer;
+    font-size: 24px;
+    border: none;
+    border-radius: 5px;
 }
-
-.hide {
-    display: none;
+.answer:hover {
+    background-color: rgb(172, 60, 40);
 }
