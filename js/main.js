@@ -113,7 +113,7 @@ function showMultiplicationTable() {
     clearMainPage()
 
     const multiplicationTableImg = document.createElement('img');
-    multiplicationTableImg.src = '../img/showMultiplicationTable.jpeg';
+    multiplicationTableImg.src = './img/showMultiplicationTable.jpeg';
     multiplicationTableImg.alt = 'Multiplication Table';
 
     const closeBtn = document.createElement('button');
