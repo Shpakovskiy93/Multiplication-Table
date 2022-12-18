@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 * {
     box-sizing: border-box;
     margin: 0;
@@ -5,13 +6,17 @@
 }
 
 .multiplication__table {
-    background-color: steelblue;
+    background-image: url(../img/bg1.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
     width: 100vw;
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 10px;
+    font-family: 'Lobster', cursive;
 }
 .main__page {
     padding: 10px 10px;
@@ -67,22 +72,22 @@
 
 
 .test {
-    border: none;
+    border: 3px solid grey;
     border-radius: 5px;
-    background-color: #fff;
-    padding: 10px;
+    padding: 10px 10px 50px;
 }
 .test__score {
     text-align: right;
     font-weight: bold;
     margin: 20px 0 20px;
+    color: #fff;
 }
 .question {
     text-align: center;
-    font-size: 42px;
-    border: 2px solid tomato;
-    border-radius: 5px;
+    font-size: 62px;
     padding: 20px 0;
+    color: #fff;
+    letter-spacing: 22px;
 }
 .answers {
     margin-top: 50px;
@@ -95,13 +100,12 @@
     padding: 20px 45px;
     width: 45%;
     margin-top: 20px;
-    background-color: tomato;
+    color: #000;
+    font-weight: bold;
+    font-size: 26px;
     cursor: pointer;
-    font-size: 24px;
     border: none;
     border-radius: 5px;
-    color: #fff;
-    font-weight: bold;
 }
 .answer:hover {
     background-color: rgb(172, 60, 40);
@@ -155,4 +159,25 @@
 }
 .show {
     display: block;
+}
+
+.answer__input {
+    padding: 15px 0px;
+    margin-bottom: 30px;
+    font-size: 26px;
+    text-align: center;
+    border: none;
+    border-radius: 5px;
+    font-weight: bold;
+    outline: none;
+    width: 100%;
+}
+
+.answer__btn {
+    padding: 19px;
+    border: none;
+    background-color: tan;
+    font-size: 20px;
+    font-weight: bold;
+    cursor: pointer;
 }

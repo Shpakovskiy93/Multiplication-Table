@@ -1,15 +1,14 @@
 (function main() {
     let counterRightAnswer = 0;
     let counterWrongAnswer = 0;
-    let counterAnswer = 0;
     let difficultyLevel;
+    let multiplicationExamplesArr = [];
     drawMainPage();
 
 
     function drawMainPage() {
         counterRightAnswer = 0;
         counterWrongAnswer = 0;
-        counterAnswer = 1;
     
         const title = document.createElement('h1');
         title.classList.add('title');
@@ -26,7 +25,8 @@
         easyTestBtn.setAttribute('data-level','easy');
         easyTestBtn.addEventListener('click', e => {
             difficultyLevel = e.target.getAttribute('data-level');
-            drawEasyTest();
+            multiplicationExamplesArr = createMultiplicationExamples(difficultyLevel);
+            drawTest();
         });
     
         const normalTestBtn = document.createElement('button');
@@ -35,7 +35,8 @@
         normalTestBtn.setAttribute('data-level','normal');
         normalTestBtn.addEventListener('click', e => {
             difficultyLevel = e.target.getAttribute('data-level');
-            drawEasyTest();
+            multiplicationExamplesArr = createMultiplicationExamples(difficultyLevel);
+            drawTest();
         });
     
         const wrapperLevelTestBtns = document.createElement('div');
@@ -50,30 +51,18 @@
         document.querySelector('.multiplication__table').append(wrapperMainPage);
     }
 
-    function drawEasyTest() {
+    function drawTest() {
 
-        if(counterAnswer === 100) {
+        if(counterRightAnswer === 100) {
             summarize();
         }
 
         document.querySelector('.multiplication__table').innerHTML = '';
-        
-        let firstNumber;
-        let secondNumber;
-        let rightAnswer
-        let answersArr = [];
-    
-        if(difficultyLevel == 'easy') {
-            firstNumber = getRandomNumer(2, 9);
-            secondNumber = getRandomNumer(2, 9);
-            rightAnswer = firstNumber * secondNumber;
-            answersArr = shuffleArray([rightAnswer, rightAnswer + 1, rightAnswer - 1, getRandomNumer(10, 100)]);
-        } else if(difficultyLevel == 'normal') {
-            firstNumber = getRandomNumer(2, 25);
-            secondNumber = getRandomNumer(2, 25);
-            rightAnswer = firstNumber * secondNumber;
-            answersArr = shuffleArray([rightAnswer, rightAnswer + 1, getRandomNumer(50, 200), getRandomNumer(10, 100)]);
-        }
+
+        let firstNumber = multiplicationExamplesArr[counterRightAnswer][0];
+        let secondNumber = multiplicationExamplesArr[counterRightAnswer][1];
+        let rightAnswer = firstNumber * secondNumber;
+        let answersArr = createAnswerArr(rightAnswer);
     
         const closeBtn = document.createElement('button');
         closeBtn.classList.add('close__btn');
@@ -82,39 +71,57 @@
     
         const counterNumber = document.createElement('span');
         counterNumber.classList.add('score__number');
-        counterNumber.innerHTML = counterAnswer;
+        counterNumber.innerHTML = counterRightAnswer;
     
         const counter = document.createElement('p');
         counter.classList.add('test__score');
-        counter.innerText = 'пример : ';
+        counter.innerText = 'пправильных ответов : ';
         counter.append(counterNumber);
     
         const question = document.createElement('h1');
         question.classList.add('question');
-        question.innerText = `${firstNumber} умножить на ${secondNumber}`;
+        question.innerText = `${firstNumber} * ${secondNumber}`;
     
-        let answerArrBtn = [];
-        for(let i = 0; i < 4; i++) {
-            let answerBtn = document.createElement('button');
-            answerBtn.classList.add('answer');
-            answerBtn.innerText = answersArr[i];
-            answerBtn.addEventListener('click', e => {
-                if(+e.target.innerText === rightAnswer) {
-                    counterRightAnswer++
-                    counterAnswer++;
-                    drawEasyTest();
-                } else {
-                    counterWrongAnswer++
-                    showPopUpWrongAnswer();
-                }
-            })
-            answerArrBtn.push(answerBtn);
-        }
+        // let answerArrBtn = [];
+        // for(let i = 0; i < 4; i++) {
+        //     let answerBtn = document.createElement('button');
+        //     answerBtn.classList.add('answer');
+        //     answerBtn.innerText = answersArr[i];
+        //     answerBtn.addEventListener('click', e => {
+        //         if(+e.target.innerText === rightAnswer) {
+        //             counterRightAnswer++;
+        //             drawTest();
+        //         } else {
+        //             counterWrongAnswer++;
+        //             showPopUpWrongAnswer();
+        //         }
+        //     })
+        //     answerArrBtn.push(answerBtn);
+        // }
+
+        let answerInput = document.createElement('input');
+        answerInput.classList.add('answer__input');
+        let answerBtn = document.createElement('button');
+        answerBtn.classList.add('answer__btn');
+        answerBtn.innerText = 'ответить';
+        answerBtn.addEventListener('click', e => {
+            if(+answerInput.value === rightAnswer) {
+                counterRightAnswer++;
+                drawTest();
+            } else {
+                counterWrongAnswer++;
+                showPopUpWrongAnswer();
+            }
+        })
         
         const wrapperAnswersBtn = document.createElement('div');
         wrapperAnswersBtn.classList.add('answers');
-        wrapperAnswersBtn.append(...answerArrBtn);
+
+
+        // wrapperAnswersBtn.append(...answerArrBtn);
+        wrapperAnswersBtn.append(answerInput, answerBtn);
     
+
         const wrapperTest = document.createElement('div');
         wrapperTest.classList.add('test');
         wrapperTest.append(closeBtn, counter, question, wrapperAnswersBtn);
@@ -139,6 +146,31 @@
         wrapperMultiplicationTableImg.append(closeBtn, multiplicationTableImg);
     
         document.querySelector('.multiplication__table').append(wrapperMultiplicationTableImg);
+    }
+
+    function createAnswerArr(rightAnswer) {
+        let answers = [];
+        let firstNumber = rightAnswer + 10;
+        let secondNumber;
+
+        if(rightAnswer <= 10){
+            secondNumber = rightAnswer - 1;
+        } else if(rightAnswer <= 20 ?? rightAnswer > 10) {
+            secondNumber = rightAnswer - 5;
+        } else {
+            secondNumber = rightAnswer - 10;
+        }
+
+        answers.push(rightAnswer);
+
+        while (answers.length <= 3) {
+            let rundomnumber  = getRandomNumer(secondNumber, firstNumber);
+            if (answers.indexOf(rundomnumber) == -1) {
+                answers.push(rundomnumber);
+            }
+        }
+
+        return shuffleArray(answers);
     }
 
     function close() {
@@ -187,6 +219,23 @@
 })()
 
 
+function createMultiplicationExamples(level) {
+    let multExamplesArr = [];
+    if(level == 'easy') {
+        for(let i = 2; i <= 9; i++) {
+            for(let y = 2; y <= 9; y++) {
+                multExamplesArr.push([i, y]);
+            }
+        }
+    } else if(level == 'normal') {
+        for(let i = 5; i <= 15; i++) {
+            for(let y = 5; y <= 15; y++) {
+                multExamplesArr.push([i, y]);
+            }
+        }
+    }
+    return shuffleArray(multExamplesArr);
+}
 function getRandomNumer(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
