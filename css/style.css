@@ -64,8 +64,21 @@
     text-transform: uppercase;
     margin-left: 10px;
 }
+.hard__test-btn {
+    display: block;
+    padding: 10px 25px;
+    background-color: tomato;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 22px;
+    color: #fff;
+    text-transform: uppercase;
+    margin: 30px auto;
+}
 .easy__test-btn:hover,
 .normal__test-btn:hover,
+.hard__test-btn:hover,
 .show__multiplicationTable-btn:hover {
     background-color: rgb(172, 60, 40);
 }

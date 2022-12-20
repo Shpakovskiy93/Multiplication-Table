@@ -38,6 +38,16 @@
             multiplicationExamplesArr = createMultiplicationExamples(difficultyLevel);
             drawTest();
         });
+
+        const hardTestBtn = document.createElement('button');
+        hardTestBtn.classList.add('hard__test-btn');
+        hardTestBtn.innerText = 'Сложный уровень';
+        hardTestBtn.setAttribute('data-level','hard');
+        hardTestBtn.addEventListener('click', e => {
+            difficultyLevel = e.target.getAttribute('data-level');
+            multiplicationExamplesArr = createMultiplicationExamples(difficultyLevel);
+            drawTest();
+        })
     
         const wrapperLevelTestBtns = document.createElement('div');
         wrapperLevelTestBtns.classList.add('level__test-btns');
@@ -45,7 +55,7 @@
     
         const wrapperMainPage = document.createElement('div');
         wrapperMainPage.classList.add('main__page');
-        wrapperMainPage.append(title, showMultiplicationTableBtn, wrapperLevelTestBtns);
+        wrapperMainPage.append(title, showMultiplicationTableBtn, wrapperLevelTestBtns, hardTestBtn);
     
     
         document.querySelector('.multiplication__table').append(wrapperMainPage);
@@ -81,46 +91,46 @@
         const question = document.createElement('h1');
         question.classList.add('question');
         question.innerText = `${firstNumber} * ${secondNumber}`;
-    
-        // let answerArrBtn = [];
-        // for(let i = 0; i < 4; i++) {
-        //     let answerBtn = document.createElement('button');
-        //     answerBtn.classList.add('answer');
-        //     answerBtn.innerText = answersArr[i];
-        //     answerBtn.addEventListener('click', e => {
-        //         if(+e.target.innerText === rightAnswer) {
-        //             counterRightAnswer++;
-        //             drawTest();
-        //         } else {
-        //             counterWrongAnswer++;
-        //             showPopUpWrongAnswer();
-        //         }
-        //     })
-        //     answerArrBtn.push(answerBtn);
-        // }
 
-        let answerInput = document.createElement('input');
-        answerInput.classList.add('answer__input');
-        let answerBtn = document.createElement('button');
-        answerBtn.classList.add('answer__btn');
-        answerBtn.innerText = 'ответить';
-        answerBtn.addEventListener('click', e => {
-            if(+answerInput.value === rightAnswer) {
-                counterRightAnswer++;
-                drawTest();
-            } else {
-                counterWrongAnswer++;
-                showPopUpWrongAnswer();
-            }
-        })
-        
         const wrapperAnswersBtn = document.createElement('div');
         wrapperAnswersBtn.classList.add('answers');
 
-
-        // wrapperAnswersBtn.append(...answerArrBtn);
-        wrapperAnswersBtn.append(answerInput, answerBtn);
-    
+        if(difficultyLevel === 'easy') {
+            let answerArrBtn = [];
+            for(let i = 0; i < 4; i++) {
+                let answerBtn = document.createElement('button');
+                answerBtn.classList.add('answer');
+                answerBtn.innerText = answersArr[i];
+                answerBtn.addEventListener('click', e => {
+                    if(+e.target.innerText === rightAnswer) {
+                        counterRightAnswer++;
+                        drawTest();
+                    } else {
+                        counterWrongAnswer++;
+                        showPopUpWrongAnswer();
+                    }
+                })
+                answerArrBtn.push(answerBtn);
+            }
+            wrapperAnswersBtn.append(...answerArrBtn);
+            
+        } else if(difficultyLevel === 'normal' || difficultyLevel === 'hard') {
+            let answerInput = document.createElement('input');
+            answerInput.classList.add('answer__input');
+            let answerBtn = document.createElement('button');
+            answerBtn.classList.add('answer__btn');
+            answerBtn.innerText = 'ответить';
+            answerBtn.addEventListener('click', e => {
+                if(+answerInput.value === rightAnswer) {
+                    counterRightAnswer++;
+                    drawTest();
+                } else {
+                    counterWrongAnswer++;
+                    showPopUpWrongAnswer();
+                }
+            })
+            wrapperAnswersBtn.append(answerInput, answerBtn);
+        }
 
         const wrapperTest = document.createElement('div');
         wrapperTest.classList.add('test');
@@ -221,13 +231,13 @@
 
 function createMultiplicationExamples(level) {
     let multExamplesArr = [];
-    if(level == 'easy') {
+    if(level == 'easy' || level == 'normal') {
         for(let i = 2; i <= 9; i++) {
             for(let y = 2; y <= 9; y++) {
                 multExamplesArr.push([i, y]);
             }
         }
-    } else if(level == 'normal') {
+    } else if(level == 'hard') {
         for(let i = 5; i <= 15; i++) {
             for(let y = 5; y <= 15; y++) {
                 multExamplesArr.push([i, y]);
