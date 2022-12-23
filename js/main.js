@@ -63,11 +63,12 @@
 
     function drawTest() {
 
-        if(counterRightAnswer === 100) {
+        if(counterRightAnswer == multiplicationExamplesArr.length) {
             summarize();
+            return;
         }
 
-        document.querySelector('.multiplication__table').innerHTML = '';
+        clearMainPage();
 
         let firstNumber = multiplicationExamplesArr[counterRightAnswer][0];
         let secondNumber = multiplicationExamplesArr[counterRightAnswer][1];
@@ -106,6 +107,7 @@
                         counterRightAnswer++;
                         drawTest();
                     } else {
+                        multiplicationExamplesArr.push(multiplicationExamplesArr[counterRightAnswer])
                         counterWrongAnswer++;
                         showPopUpWrongAnswer();
                     }
@@ -224,6 +226,32 @@
 
     function summarize() {
         
+        clearMainPage()
+
+        const summarizeWrapper = document.createElement('div');
+        summarizeWrapper.classList.add('summarize');
+
+        const summarizeWrongCounter = document.createElement('h2');
+        summarizeWrongCounter.classList.add('summarize__wrong-counter');
+        summarizeWrongCounter.innerText = `ошибок : ${counterWrongAnswer}`;
+
+        const summarizeRepeatBtn = document.createElement('button');
+        summarizeRepeatBtn.classList.add('summarize__repeat-btn');
+        summarizeRepeatBtn.innerText = 'повторить тест';
+        summarizeRepeatBtn.addEventListener('click', e => {
+            counterRightAnswer = 0;
+            counterWrongAnswer = 0;
+            drawTest()
+        })
+
+        const summrizeBackBtn = document.createElement('button');
+        summrizeBackBtn.classList.add('summrize__back-btn');
+        summrizeBackBtn.innerText = 'главное меню';
+        summrizeBackBtn.addEventListener('click', close);
+
+        summarizeWrapper.append(summarizeWrongCounter, summarizeRepeatBtn, summrizeBackBtn);
+
+        document.querySelector('.multiplication__table').append(summarizeWrapper);
     }
 
 })()
@@ -238,8 +266,8 @@ function createMultiplicationExamples(level) {
             }
         }
     } else if(level == 'hard') {
-        for(let i = 5; i <= 15; i++) {
-            for(let y = 5; y <= 15; y++) {
+        for(let i = 2; i <= 15; i++) {
+            for(let y = 2; y <= 15; y++) {
                 multExamplesArr.push([i, y]);
             }
         }
